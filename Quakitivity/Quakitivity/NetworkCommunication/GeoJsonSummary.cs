@@ -51,7 +51,9 @@ namespace Quakitivity.NetworkCommunication
 
         public double Magnitude => Properties.Magnitude;
 
-        public DateTime Time => new DateTime(1970, 1, 1).AddMilliseconds(Properties.Time); //TODO: Ignoring leap seconds, since we dont have the info
+        public DateTime Time => new DateTime(1970, 1, 1).AddMilliseconds(Properties.Time); //Ignoring leap seconds, since we dont have the info
+
+        public DateTime UpdatedTime => new DateTime(1970, 1, 1).AddMilliseconds(Properties.Updated); //Ignoring leap seconds, since we dont have the info
 
         public Point Coordinates => (Geometry?.Coordinates?.Length == 3) ? new Point(Geometry.Coordinates[1], Geometry.Coordinates[2]) : new Point(0, 0);
 
@@ -65,6 +67,9 @@ namespace Quakitivity.NetworkCommunication
 
         [DataMember(Name = "time")]
         public long Time { get; private set; }
+
+        [DataMember(Name = "updated")]
+        public long Updated { get; private set; }
 
         [DataMember(Name = "type")]
         public string Type { get; private set; }
