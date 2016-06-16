@@ -19,7 +19,14 @@ namespace Quakitivity.ViewModel
         //City panjim = new City("Panjim", "India");
         //City vasco = new City("Vasco", "India");
         public RelayCommand RefreshQuakeActivity { get; set; }
+
+        /// <summary>
+        /// We use a combination of an ObservableCollection and a Dictionary to store the earthquakes.
+        /// We save a pointer to the same object in both. When there are new items, we quickly check the dictionary if the item is present.
+        /// If the new item has an updated timestamp, we replace the item in the ObservableCollection.
+        /// </summary>
         public ObservableCollection<Model.Earthquake> EarthquakeActivity {get;} = new ObservableCollection<Model.Earthquake>();
+        private IDictionary<string, Model.Earthquake> EarthquakeActivityDictionary = new Dictionary<string, Model.Earthquake>();
 
         public QuakeActivityViewModel()
         {
@@ -33,9 +40,31 @@ namespace Quakitivity.ViewModel
         private async void FetchEarthquakeActivity(object parameter)
         {
             GeoJsonSummary summary = await EarthquakeUsgsGovRestAPI.GetAllHourSummary();
-            foreach (var earthquake in summary.Earthquakes)
+            if (summary == null) return;
+
+            foreach (var earthquake in summary?.Earthquakes)
             {
-                EarthquakeActivity.Add(new Model.Earthquake { Time = earthquake.Time, Magnitude = earthquake.Magnitude, Coordinates = earthquake.Coordinates });
+                Model.Earthquake quake = new Model.Earthquake { Time = earthquake.Time, Magnitude = earthquake.Magnitude, Coordinates = earthquake.Coordinates, UpdatedTime = earthquake.UpdatedTime };
+
+                var id = EarthquakeActivityDictionary.Keys.Intersect(earthquake.AssociatedIds);
+                if (id.Any())
+                {
+                    //If there is an associated ID, just update the quake info if it has a newer update timestamp
+                    var item = EarthquakeActivityDictionary[id.First()];
+                    if (earthquake.UpdatedTime > item.UpdatedTime)
+                    {
+                        EarthquakeActivity.Remove(item);
+                        EarthquakeActivityDictionary[id.First()] = quake;
+                        EarthquakeActivity.Add(quake);
+
+                    }
+                }
+                else
+                {
+                    //This is the first time we are seeing this quake, so add it
+                    EarthquakeActivityDictionary.Add(earthquake.ID, quake);
+                    EarthquakeActivity.Add(quake);
+                }
             }
         }
 
