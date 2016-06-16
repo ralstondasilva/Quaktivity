@@ -66,6 +66,7 @@
     </Compile>
     <Compile Include="Model\City.cs" />
     <Compile Include="Model\Earthquake.cs" />
+    <Compile Include="NetworkCommunication\EarthquakeUsgsGovRestAPI.cs" />
     <Compile Include="NetworkCommunication\GeoJsonSummary.cs" />
     <Compile Include="ViewModel\QuakeActivityViewModel.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
