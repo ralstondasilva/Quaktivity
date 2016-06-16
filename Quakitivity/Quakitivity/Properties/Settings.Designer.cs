@@ -25,7 +25,7 @@ namespace Quakitivity.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("00:00:10")]
+        [global::System.Configuration.DefaultSettingValueAttribute("00:05:00")]
         public global::System.TimeSpan RefreshPeriod {
             get {
                 return ((global::System.TimeSpan)(this["RefreshPeriod"]));
