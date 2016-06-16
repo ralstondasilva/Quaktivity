@@ -24,7 +24,6 @@ namespace Quakitivity.View
         public QuaktivityWindow()
         {
             InitializeComponent();
-            this.DataContext = new QuakeActivityViewModel();
         }
     }
 }
