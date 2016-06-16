@@ -56,7 +56,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="View\MainWindow.xaml">
+    <Page Include="View\QuaktivityWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -64,13 +64,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="Model\City.cs" />
     <Compile Include="Model\Earthquake.cs" />
     <Compile Include="NetworkCommunication\EarthquakeUsgsGovRestAPI.cs" />
     <Compile Include="NetworkCommunication\GeoJsonSummary.cs" />
     <Compile Include="ViewModel\QuakeActivityViewModel.cs" />
-    <Compile Include="View\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="View\QuaktivityWindow.xaml.cs">
+      <DependentUpon>QuaktivityWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
