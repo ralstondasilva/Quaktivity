@@ -30,9 +30,10 @@ namespace Quakitivity.ViewModel
 
         public QuakeActivityViewModel()
         {
-            //EarthquakeActivity.Add(new Model.Earthquake { Time = DateTime.Now, Magnitude = 7.2, Coordinates = new Point(12.34, 23.5) });
-            //EarthquakeActivity.Add(new Model.Earthquake { Time = DateTime.Now, Magnitude = 5.2, Coordinates = new Point(132.34, 4323.5) });
-            //EarthquakeActivity.Add(new Model.Earthquake { Time = DateTime.Now, Magnitude = 3.6, Coordinates = new Point(1232.34, 1123.5) });
+            //Model.Earthquake quake = new Model.Earthquake { Time = DateTime.Now, Magnitude = 7.2, Coordinates = new Point(12.34, 23.5), UpdatedTime = DateTime.MinValue };
+            //EarthquakeActivityDictionary.Add("ci37389175", quake);
+            //EarthquakeActivity.Add(quake);
+
             RefreshQuakeActivity = new RelayCommand(FetchEarthquakeActivity);
             StartPeriodicTimer();
         }
