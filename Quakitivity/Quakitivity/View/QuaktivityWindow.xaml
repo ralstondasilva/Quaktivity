@@ -26,6 +26,9 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="30"/>
         </Grid.ColumnDefinitions>
+        
+        <!--Refresh Button-->
+        <Button Grid.Row="0" Grid.Column="4" Content="Refresh" Command="{Binding RefreshQuakeActivity}"/>
 
         <!--Table Header-->
         <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Text="Date" />
