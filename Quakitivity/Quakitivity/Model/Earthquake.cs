@@ -22,6 +22,16 @@ namespace Quakitivity.Model
         }
 
         /// <summary>
+        /// The time when the earthquake info was updated.
+        /// </summary>
+        private DateTime updatedTime;
+        public DateTime UpdatedTime
+        {
+            get { return updatedTime; }
+            set { if (updatedTime != value) { updatedTime = value; RaisePropertyChanged(nameof(UpdatedTime)); } }
+        }
+
+        /// <summary>
         /// The magnitude of the earthquake
         /// </summary>
         private double magnitude;
