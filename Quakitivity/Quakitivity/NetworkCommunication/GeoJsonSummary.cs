@@ -40,6 +40,9 @@ namespace Quakitivity.NetworkCommunication
     [DataContract]
     class Earthquake
     {
+        [DataMember(Name = "id")]
+        public string ID { get; private set; }
+
         [DataMember(Name = "type")]
         public string Type { get; private set; }
 
@@ -57,6 +60,7 @@ namespace Quakitivity.NetworkCommunication
 
         public Point Coordinates => (Geometry?.Coordinates?.Length == 3) ? new Point(Geometry.Coordinates[1], Geometry.Coordinates[2]) : new Point(0, 0);
 
+        public string[] AssociatedIds => Properties.AssociatedIds.Split(',').Where((id) => !string.IsNullOrEmpty(id)).ToArray();
     }
 
     [DataContract]
@@ -73,6 +77,9 @@ namespace Quakitivity.NetworkCommunication
 
         [DataMember(Name = "type")]
         public string Type { get; private set; }
+
+        [DataMember(Name = "ids")]
+        public string AssociatedIds { get; private set; }
     }
 
     [DataContract]
