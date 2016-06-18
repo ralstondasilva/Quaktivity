@@ -66,6 +66,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Helpers\CityListGenerator.cs" />
+    <Compile Include="Helpers\CityHelper.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Model\City.cs" />
