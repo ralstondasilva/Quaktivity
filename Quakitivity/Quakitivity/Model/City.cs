@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Quakitivity.Model
 {
@@ -16,6 +17,7 @@ namespace Quakitivity.Model
     {
         public string Name { get; }
         public string Country { get; }
-        public City(string name, string country) { Name = name; Country = country; }
+        public Point Coordinates { get; }
+        public City(string name, string country, Point coordinates) { Name = name; Country = country; Coordinates = coordinates;}
     }
 }
