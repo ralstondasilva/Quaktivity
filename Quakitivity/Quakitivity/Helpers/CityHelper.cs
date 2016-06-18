@@ -9,6 +9,13 @@ namespace Quakitivity.Helpers
 {
     class CityHelper
     {
+        /// <summary>
+        /// Returns nearby cities given a coordinate on the earth's surface
+        /// </summary>
+        /// <param name="point"></param>
+        /// <param name="cities"></param>
+        /// <param name="maxCityCount"></param>
+        /// <returns>Array of nearby cities</returns>
         public static async Task<City[]> FindNearbyCities(Point point, City[] cities, int maxCityCount)
         {
             return await Task.Run(() => 
@@ -35,6 +42,12 @@ namespace Quakitivity.Helpers
             });
         }
 
+        /// <summary>
+        /// Returns the distance between two cities
+        /// </summary>
+        /// <param name="location1"></param>
+        /// <param name="location2"></param>
+        /// <returns>The distance between the two locations</returns>
         public static double DistanceBetween(Point location1, Point location2)
         {
             GeoCoordinate coordinate1 = new GeoCoordinate(location1.X, location1.Y);

@@ -7,6 +7,9 @@ namespace Quakitivity.Model
     {
         public int RefreshPeriod { get; } = (int) Properties.Settings.Default.RefreshPeriod.TotalMinutes;
 
+        /// <summary>
+        /// Visibility of the progress message, while the list of cities is being downloaded
+        /// </summary>
         private Visibility cityDownloader = Visibility.Visible;
         public Visibility CityDownloader
         {
@@ -14,6 +17,9 @@ namespace Quakitivity.Model
             set { if (cityDownloader != value) { cityDownloader = value; RaisePropertyChanged(nameof(CityDownloader)); } }
         }
 
+        /// <summary>
+        /// Visibility of the earthquake result table
+        /// </summary>
         private Visibility earthquakeReport = Visibility.Collapsed;
         public Visibility EarthquakeReport
         {

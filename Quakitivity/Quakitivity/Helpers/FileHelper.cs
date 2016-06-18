@@ -10,6 +10,11 @@ namespace Quakitivity.Helpers
     {
         private static string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.Create) + "\\Quakitivity";
 
+        /// <summary>
+        /// Downloads a file from the given url
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns>Path to downloaded file</returns>
         public static async Task<string> FetchFile(string url)
         {
             Directory.CreateDirectory(folderPath);
@@ -23,6 +28,11 @@ namespace Quakitivity.Helpers
             return zipPath;
         }
 
+        /// <summary>
+        /// Extracts the contents of a zipped file
+        /// </summary>
+        /// <param name="zipPath"></param>
+        /// <returns>Path to extracted file</returns>
         public static string ExtractFile(string zipPath)
         {
             Directory.CreateDirectory(folderPath);

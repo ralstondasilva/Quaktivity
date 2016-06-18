@@ -10,6 +10,11 @@ namespace Quakitivity.Helpers
 {
     class CityListGenerator
     {
+        /// <summary>
+        /// Reads a csv containg the cities of the world and returns an array of City objects 
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
         public static async Task<City[]> GetCities(string filePath)
         {
             try

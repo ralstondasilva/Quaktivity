@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
-using static Quakitivity.Helpers.CityListGenerator;
+using Quakitivity.Helpers;
 
 
 namespace Quakitivity.ViewModel
@@ -38,13 +38,21 @@ namespace Quakitivity.ViewModel
             WindowLoaded = new RelayCommand(Initialize);  
         }
 
+        /// <summary>
+        /// Gets all the cities of the world
+        /// </summary>
+        /// <returns></returns>
         private async Task FetchCityInfo()
         {
             string filePath = await FileHelper.FetchFile(Properties.Settings.Default.CitiesURL);
             string extractedPath = FileHelper.ExtractFile(filePath);   
-            Cities = await GetCities(extractedPath);
+            Cities = await CityListGenerator.GetCities(extractedPath);
         }
 
+        /// <summary>
+        /// This function is triggered when the window is loaded
+        /// </summary>
+        /// <param name="parameter"></param>
         private async void Initialize(object parameter)
         {
             if (this.FirstLoad)
@@ -63,6 +71,10 @@ namespace Quakitivity.ViewModel
             }
         }
 
+        /// <summary>
+        /// Fetches earthquake activity and finds the list of nearby cities
+        /// </summary>
+        /// <param name="parameter"></param>
         private async void FetchEarthquakeActivity(object parameter)
         {
             GeoJsonSummary summary = await EarthquakeUsgsGovRestAPI.GetAllHourSummary();
@@ -95,6 +107,9 @@ namespace Quakitivity.ViewModel
             }
         }
 
+        /// <summary>
+        /// Periodic timer to check for earthquake activity
+        /// </summary>
         public void StartPeriodicTimer()
         {
             DispatcherTimer periodicTimer = new DispatcherTimer(DispatcherPriority.Normal);

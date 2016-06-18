@@ -8,6 +8,10 @@ namespace Quakitivity.NetworkCommunication
 {
     class EarthquakeUsgsGovRestAPI
     {
+        /// <summary>
+        /// Returns the earthquakes reported in the last hour
+        /// </summary>
+        /// <returns></returns>
         public static async Task<GeoJsonSummary> GetAllHourSummary()
         {
             try
