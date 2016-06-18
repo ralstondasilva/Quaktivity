@@ -7,7 +7,7 @@
         xmlns:viewModel="clr-namespace:Quakitivity.ViewModel"
         xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="500" Width="800">
     <Window.DataContext>
         <viewModel:QuakeActivityViewModel/>
     </Window.DataContext>
@@ -17,63 +17,85 @@
         </Interactivity:EventTrigger>
     </Interactivity:Interaction.Triggers>
     <Grid>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="30"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30"/>
-            <ColumnDefinition Width="140"/>
-            <ColumnDefinition Width="70"/>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="30"/>
-        </Grid.ColumnDefinitions>
         
-        <!--Refresh Button-->
-        <Button Grid.Row="0" Grid.Column="4" Content="Refresh" Command="{Binding RefreshQuakeActivity}"/>
+        <!--Earthquake Report -->
+        <Grid Visibility="{Binding UiState.EarthquakeReport}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="140"/>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="30"/>
+            </Grid.ColumnDefinitions>
 
-        <!--Table Header-->
-        <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Text="Date" />
-        <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Text="Magnitude"/>
-        <TextBlock Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" Text="Coordinates"/>
-        <TextBlock Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" Text="Cities"/>
+            <!--Refresh Button-->
+            <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" 
+                       HorizontalAlignment="Right" VerticalAlignment="Center" 
+                       Text="Automatically refreshes every 5 minutes. To refresh now, click this button" />
+            <Button Grid.Row="3" Grid.Column="6" Content="Refresh" Command="{Binding RefreshQuakeActivity}"/>
 
-        <!--Table Body-->
-        <ListView Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4"
+            <!--Table Header-->
+            <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Text="Date" />
+            <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Text="Magnitude"/>
+            <TextBlock Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" Text="Coordinates"/>
+            <TextBlock Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="Cities"/>
+
+            <!--Table Body-->
+            <ListView Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4"
                   ItemsSource="{Binding EarthquakeActivity}" 
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                   Background="{x:Null}" BorderBrush="{x:Null}" 
                   Focusable="False" BorderThickness="0">
-            <ListView.ItemTemplate >
-                <DataTemplate>
-                    <Grid Height="Auto">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="140"/>
-                            <ColumnDefinition Width="70"/>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding Time, StringFormat={}{0:MMMM dd yyyy hh:mm:ss tt}}" 
+                <ListView.ItemTemplate >
+                    <DataTemplate>
+                        <Grid Height="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="140"/>
+                                <ColumnDefinition Width="70"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding Time, StringFormat={}{0:MMMM dd yyyy hh:mm:ss tt}}" 
                                    HorizontalAlignment="Left" TextAlignment="Left"/>
-                        <TextBlock Grid.Column="1" Text="{Binding Magnitude, StringFormat={}{0:0.##}}" 
+                            <TextBlock Grid.Column="1" Text="{Binding Magnitude, StringFormat={}{0:0.##}}" 
                                    HorizontalAlignment="Center"/>
-                        <TextBlock Grid.Column="2" TextWrapping="Wrap" >
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0}, {1}">
-                                    <Binding Path="Coordinates.X"/>
-                                    <Binding Path="Coordinates.Y"/>
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
-                        <TextBlock Grid.Column="3" Text="{Binding NearbyCities}" TextWrapping="Wrap" 
-                                   VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                            <TextBlock Grid.Column="2" TextWrapping="Wrap" >
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0:0.##}, {1:0.##}">
+                                        <Binding Path="Coordinates.X"/>
+                                        <Binding Path="Coordinates.Y"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <TextBlock Grid.Column="3" Grid.ColumnSpan="3" 
+                                       Text="{Binding NearbyCities}" TextWrapping="Wrap" 
+                                       VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
+        <!-- Downloading City Info-->
+        <Grid Visibility="{Binding UiState.CityDownloader}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="1" Text="Downloading List of Cities..." HorizontalAlignment="Center"/>
+            <ProgressBar Grid.Row="2" Width="100" IsIndeterminate="True"/>
+        </Grid>
     </Grid>
 </Window>
