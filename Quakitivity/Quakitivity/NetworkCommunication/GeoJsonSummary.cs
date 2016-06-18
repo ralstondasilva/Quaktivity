@@ -58,7 +58,7 @@ namespace Quakitivity.NetworkCommunication
 
         public DateTime UpdatedTime => new DateTime(1970, 1, 1).AddMilliseconds(Properties.Updated); //Ignoring leap seconds, since we dont have the info
 
-        public Point Coordinates => (Geometry?.Coordinates?.Length == 3) ? new Point(Geometry.Coordinates[1], Geometry.Coordinates[2]) : new Point(0, 0);
+        public Point Coordinates => (Geometry?.Coordinates?.Length == 3) ? new Point(Geometry.Coordinates[1], Geometry.Coordinates[0]) : new Point(0, 0);
 
         public string[] AssociatedIds => Properties.AssociatedIds.Split(',').Where((id) => !string.IsNullOrEmpty(id)).ToArray();
     }
