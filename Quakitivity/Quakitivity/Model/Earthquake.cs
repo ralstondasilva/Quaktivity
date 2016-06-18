@@ -17,7 +17,7 @@ namespace Quakitivity.Model
         private DateTime time;
         public DateTime Time
         {
-            get { return time; }
+            get { return time.ToLocalTime(); }
             set { if (time != value) { time = value; RaisePropertyChanged(nameof(Time)); } }
         }
 
