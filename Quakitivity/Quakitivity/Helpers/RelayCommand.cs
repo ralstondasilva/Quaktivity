@@ -19,7 +19,7 @@ namespace Quakitivity.Helpers
 
         public RelayCommand(Action<object> execute, Predicate<object> canExecute)
         {
-            if (execute == null) throw new ArgumentNullException("execute");
+            if (execute == null) throw new ArgumentNullException(nameof(execute));
             this.execute = execute;
             this.canExecute = canExecute;
         }
