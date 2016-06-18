@@ -28,6 +28,8 @@ Alternately, build the solution and launch Quakitivity.exe from the bin\Debug or
 ## Dependencies/References
 
 All the dependencies are part of the .NET framework:
+| Reference                         | Description										  |
+| --------------------------------- | --------------------------------------------------- |
 | System.Net.Http                   | To make a REST call to the earthquake.usgs.gov api  |
 | System.IO.Compression.FileSystem	| To unzip the list of cities returned by OpenGeoCode |
 | System.Runtime.Serialization		| To parse the JSON response to C# objects			  |
