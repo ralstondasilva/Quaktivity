@@ -13,7 +13,7 @@ namespace Quakitivity.Helpers
     {
         private static string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.Create) + "\\Quakitivity";
 
-        public static async Task<string> FetchFile()
+        public static async Task<string> FetchFile(string url)
         {
             Directory.CreateDirectory(folderPath);
 
@@ -21,7 +21,7 @@ namespace Quakitivity.Helpers
             if (File.Exists(zipPath)) File.Delete(zipPath);
 
             WebClient webClient = new WebClient();
-            await webClient.DownloadFileTaskAsync(new Uri("http://www.opengeocode.org/download/worldcities.zip"), zipPath);
+            await webClient.DownloadFileTaskAsync(new Uri(url), zipPath);
 
             return zipPath;
         }

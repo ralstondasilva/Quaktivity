@@ -41,7 +41,7 @@ namespace Quakitivity.ViewModel
 
         private async Task FetchCityInfo()
         {
-            string filePath = await FileHelper.FetchFile();
+            string filePath = await FileHelper.FetchFile(Properties.Settings.Default.CitiesURL);
             string extractedPath = FileHelper.ExtractFile(filePath);   
             Cities = await GetCities(extractedPath);
         }

@@ -11,5 +11,8 @@
     <Setting Name="NearbyCityCount" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">3</Value>
     </Setting>
+    <Setting Name="CitiesURL" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://www.opengeocode.org/download/worldcities.zip</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
