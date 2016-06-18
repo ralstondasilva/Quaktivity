@@ -26,12 +26,12 @@ namespace Quakitivity.Helpers
             return zipPath;
         }
 
-        public static async Task<string> ExtractFile(string zipPath)
+        public static string ExtractFile(string zipPath)
         {
             Directory.CreateDirectory(folderPath);
 
             string filePath = folderPath + "\\worldcities.csv";
-            if (File.Exists(filePath)) File. Delete(filePath);
+            if (File.Exists(filePath)) File.Delete(filePath);
 
             ExtractToDirectory(zipPath, folderPath);
 
