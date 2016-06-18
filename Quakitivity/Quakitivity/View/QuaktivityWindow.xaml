@@ -9,14 +9,44 @@
         xmlns:Properties="clr-namespace:Quakitivity.Properties"
         mc:Ignorable="d"
         Title="{x:Static Properties:Resources.AppName}" Height="500" Width="800">
+    
+    <!--View Model-->
     <Window.DataContext>
         <viewModel:QuakeActivityViewModel/>
     </Window.DataContext>
+    
+    <!--Loaded event in ViewModel-->
     <Interactivity:Interaction.Triggers>
         <Interactivity:EventTrigger EventName="Loaded">
             <Interactivity:InvokeCommandAction Command="{Binding WindowLoaded}"/>
         </Interactivity:EventTrigger>
     </Interactivity:Interaction.Triggers>
+
+    <!--Styles-->
+    <Window.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TextStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Foreground" Value="#FF333333"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+            <Style x:Key="CenterTextStyle" TargetType="TextBlock" BasedOn="{StaticResource TextStyle}">
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="TextAlignment" Value="Center"/>
+            </Style>
+            <Style x:Key="RightTextStyle" TargetType="TextBlock" BasedOn="{StaticResource TextStyle}">
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+            </Style>
+            <Style x:Key="WrapTextStyle" TargetType="TextBlock" BasedOn="{StaticResource TextStyle}">
+                <Setter Property="TextWrapping" Value="Wrap"/>
+            </Style>
+            <Style x:Key="CenterWrapTextStyle" TargetType="TextBlock" BasedOn="{StaticResource CenterTextStyle}">
+                <Setter Property="TextWrapping" Value="Wrap"/>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    
     <Grid>
         
         <!--Earthquake Report -->
@@ -40,8 +70,7 @@
             </Grid.ColumnDefinitions>
 
             <!--Refresh Button-->
-            <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" 
-                       HorizontalAlignment="Right" VerticalAlignment="Center">
+            <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Style="{StaticResource RightTextStyle}">
                 <TextBlock.Text>
                     <MultiBinding StringFormat="{x:Static Properties:Resources.RefreshSummary}">
                         <Binding Path="UiState.RefreshPeriod"/>
@@ -49,15 +78,13 @@
                 </TextBlock.Text>
             </TextBlock>
 
-            <Button Grid.Row="3" Grid.Column="6" 
-                    Content="{x:Static Properties:Resources.RefreshButtonText}" 
-                    Command="{Binding RefreshQuakeActivity}"/>
+            <Button Grid.Row="3" Grid.Column="6" Content="{x:Static Properties:Resources.RefreshButtonText}" Command="{Binding RefreshQuakeActivity}"/>
 
             <!--Table Header-->
-            <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Text="{x:Static Properties:Resources.DateHeader}"/>
-            <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Text="{x:Static Properties:Resources.MagnitudeHeader}"/>
-            <TextBlock Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" Text="{x:Static Properties:Resources.CoordinateHeader}"/>
-            <TextBlock Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="{x:Static Properties:Resources.NearestCitiesHeader}"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Static Properties:Resources.DateHeader}" Style="{StaticResource CenterTextStyle}"/>
+            <TextBlock Grid.Row="1" Grid.Column="2" Text="{x:Static Properties:Resources.MagnitudeHeader}" Style="{StaticResource CenterTextStyle}"/>
+            <TextBlock Grid.Row="1" Grid.Column="3" Text="{x:Static Properties:Resources.CoordinateHeader}" Style="{StaticResource CenterTextStyle}"/>
+            <TextBlock Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="3" Text="{x:Static Properties:Resources.NearestCitiesHeader}" Style="{StaticResource CenterTextStyle}"/>
 
             <!--Table Body-->
             <ListView Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="6"
@@ -74,11 +101,9 @@
                                 <ColumnDefinition Width="150"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="{Binding Time, StringFormat={}{0:MMMM dd yyyy hh:mm:ss tt}}" 
-                                   HorizontalAlignment="Left" TextAlignment="Left"/>
-                            <TextBlock Grid.Column="1" Text="{Binding Magnitude, StringFormat={}{0:0.##}}" 
-                                   HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Column="2" TextWrapping="Wrap" TextAlignment="Center">
+                            <TextBlock Grid.Column="0" Text="{Binding Time, StringFormat={}{0:MMMM dd yyyy hh:mm:ss tt}}" Style="{StaticResource CenterTextStyle}"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Magnitude, StringFormat={}{0:0.##}}" Style="{StaticResource CenterTextStyle}"/>
+                            <TextBlock Grid.Column="2" Style="{StaticResource CenterWrapTextStyle}">
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}{0:0.##}, {1:0.##}">
                                         <Binding Path="Coordinates.X"/>
@@ -86,9 +111,7 @@
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
-                            <TextBlock Grid.Column="3" Grid.ColumnSpan="3" 
-                                       Text="{Binding NearbyCities}" TextWrapping="Wrap" 
-                                       VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <TextBlock Grid.Column="3" Grid.ColumnSpan="3" Text="{Binding NearbyCities}" Style="{StaticResource WrapTextStyle}"/>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -103,7 +126,7 @@
                 <RowDefinition Height="15"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="1" Text="{x:Static Properties:Resources.CityDownloaderProgressMessage}" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Row="1" Text="{x:Static Properties:Resources.CityDownloaderProgressMessage}" Style="{StaticResource CenterTextStyle}"/>
             <ProgressBar Grid.Row="2" Width="100" IsIndeterminate="True"/>
         </Grid>
     </Grid>
