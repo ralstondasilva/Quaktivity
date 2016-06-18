@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:Quakitivity"
         xmlns:viewModel="clr-namespace:Quakitivity.ViewModel"
         xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:Properties="clr-namespace:Quakitivity.Properties"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="800">
+        Title="{x:Static Properties:Resources.AppName}" Height="500" Width="800">
     <Window.DataContext>
         <viewModel:QuakeActivityViewModel/>
     </Window.DataContext>
@@ -40,18 +41,26 @@
 
             <!--Refresh Button-->
             <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" 
-                       HorizontalAlignment="Right" VerticalAlignment="Center" 
-                       Text="Automatically refreshes every 5 minutes. To refresh now, click this button" />
-            <Button Grid.Row="3" Grid.Column="6" Content="Refresh" Command="{Binding RefreshQuakeActivity}"/>
+                       HorizontalAlignment="Right" VerticalAlignment="Center">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{x:Static Properties:Resources.RefreshSummary}">
+                        <Binding Path="UiState.RefreshPeriod"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+
+            <Button Grid.Row="3" Grid.Column="6" 
+                    Content="{x:Static Properties:Resources.RefreshButtonText}" 
+                    Command="{Binding RefreshQuakeActivity}"/>
 
             <!--Table Header-->
-            <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Text="Date" />
-            <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Text="Magnitude"/>
-            <TextBlock Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" Text="Coordinates"/>
-            <TextBlock Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="Cities"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Text="{x:Static Properties:Resources.DateHeader}"/>
+            <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Text="{x:Static Properties:Resources.MagnitudeHeader}"/>
+            <TextBlock Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" Text="{x:Static Properties:Resources.CoordinateHeader}"/>
+            <TextBlock Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="{x:Static Properties:Resources.NearestCitiesHeader}"/>
 
             <!--Table Body-->
-            <ListView Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4"
+            <ListView Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="6"
                   ItemsSource="{Binding EarthquakeActivity}" 
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                   Background="{x:Null}" BorderBrush="{x:Null}" 
@@ -62,14 +71,14 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="140"/>
                                 <ColumnDefinition Width="70"/>
-                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="150"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="{Binding Time, StringFormat={}{0:MMMM dd yyyy hh:mm:ss tt}}" 
                                    HorizontalAlignment="Left" TextAlignment="Left"/>
                             <TextBlock Grid.Column="1" Text="{Binding Magnitude, StringFormat={}{0:0.##}}" 
                                    HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Column="2" TextWrapping="Wrap" >
+                            <TextBlock Grid.Column="2" TextWrapping="Wrap" TextAlignment="Center">
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}{0:0.##}, {1:0.##}">
                                         <Binding Path="Coordinates.X"/>
@@ -94,7 +103,7 @@
                 <RowDefinition Height="15"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="1" Text="Downloading List of Cities..." HorizontalAlignment="Center"/>
+            <TextBlock Grid.Row="1" Text="{x:Static Properties:Resources.CityDownloaderProgressMessage}" HorizontalAlignment="Center"/>
             <ProgressBar Grid.Row="2" Width="100" IsIndeterminate="True"/>
         </Grid>
     </Grid>

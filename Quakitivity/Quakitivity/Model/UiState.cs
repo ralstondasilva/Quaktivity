@@ -10,6 +10,8 @@ namespace Quakitivity.Model
 {
     class UiState : INotifyPropertyChanged
     {
+        public int RefreshPeriod { get; } = (int) Properties.Settings.Default.RefreshPeriod.TotalMinutes;
+
         private Visibility cityDownloader = Visibility.Visible;
         public Visibility CityDownloader
         {
