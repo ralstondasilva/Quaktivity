@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using static Quakitivity.Helpers.CityListGenerator;
+
 
 namespace Quakitivity.ViewModel
 {
@@ -18,6 +20,8 @@ namespace Quakitivity.ViewModel
         //City margao = new City("Margao", "India");
         //City panjim = new City("Panjim", "India");
         //City vasco = new City("Vasco", "India");
+        private City[] Cities;
+
         public RelayCommand RefreshQuakeActivity { get; set; }
 
         /// <summary>
@@ -33,9 +37,17 @@ namespace Quakitivity.ViewModel
             //Model.Earthquake quake = new Model.Earthquake { Time = DateTime.Now, Magnitude = 7.2, Coordinates = new Point(12.34, 23.5), UpdatedTime = DateTime.MinValue };
             //EarthquakeActivityDictionary.Add("ci37389175", quake);
             //EarthquakeActivity.Add(quake);
+            FetchCityInfo();
 
             RefreshQuakeActivity = new RelayCommand(FetchEarthquakeActivity);
             StartPeriodicTimer();
+        }
+
+        private async void FetchCityInfo()
+        {
+            string filePath = await FileHelper.FetchFile();
+            string extractedPath = await FileHelper.ExtractFile(filePath);   
+            Cities = await GetCities(extractedPath);
         }
 
         private async void FetchEarthquakeActivity(object parameter)
@@ -57,7 +69,6 @@ namespace Quakitivity.ViewModel
                         EarthquakeActivity.Remove(item);
                         EarthquakeActivityDictionary[id.First()] = quake;
                         EarthquakeActivity.Add(quake);
-
                     }
                 }
                 else
