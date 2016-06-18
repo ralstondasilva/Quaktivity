@@ -20,15 +20,31 @@ The app has some configurable settings. These are located in Properties\Settings
 - The periodic refresh timer
 - The urls for the earthquake feed and the list of cities
 
+## Instructions
+
+To run the project within Visual Studio, open Quakitivity\Quakitivity.sln and click Start(F5).
+Alternately, build the solution and launch Quakitivity.exe from the bin\Debug or bin\Release folder.
+
+## Dependencies/References
+
+All the dependencies are part of the .NET framework:
+| System.Net.Http                   | To make a REST call to the earthquake.usgs.gov api  |
+| System.IO.Compression.FileSystem	| To unzip the list of cities returned by OpenGeoCode |
+| System.Runtime.Serialization		| To parse the JSON response to C# objects			  |
+| System.Windows.Interactivity		| To add a Loaded event to the ViewModel			  |
+| System.Device						| To get the distance between two GeoCoordinates	  |
+
 ## Implementation Details
 
 ### List of Cities
+
 The app reads the csv file line by line, and adds cities to a Dictionary if the same city hasnt been added before. 
-The coordinates are used to uniquely identify the cities. 
+The coordinates are used to uniquely identify the cities (The depth parameter is ignored, since distances of the surface would give us the same result).  
 For multiple entries for the same city, we use the first one we encountered - This can be extended to give english names priority over other languags if needed)
 (Didn't use the NGA GNS Unique Feature Identifier (UFI) from the csv because some cities had the UFI field empty).
 
 ### Nearby Cities
+
 The app lists the 3 nearest cities to the earthquake epicenter. 
 This is done by iterating through the City[] array and replacing the largest item in a SortedDictionary if a nearer city is found.
 This Operation completes in **O(log3 * n)** or  **O(n)** (where n is the total number of cities). 
