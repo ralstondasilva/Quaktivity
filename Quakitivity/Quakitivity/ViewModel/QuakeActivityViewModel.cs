@@ -10,15 +10,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using static Quakitivity.Helpers.CityListGenerator;
+
 
 namespace Quakitivity.ViewModel
 {
     class QuakeActivityViewModel
     {
-        //City margao = new City("Margao", "India");
-        //City panjim = new City("Panjim", "India");
-        //City vasco = new City("Vasco", "India");
+        private City[] Cities;
+
         public RelayCommand RefreshQuakeActivity { get; set; }
+        public RelayCommand WindowLoaded { get; set; }
 
         /// <summary>
         /// We use a combination of an ObservableCollection and a Dictionary to store the earthquakes.
@@ -30,11 +32,21 @@ namespace Quakitivity.ViewModel
 
         public QuakeActivityViewModel()
         {
-            //Model.Earthquake quake = new Model.Earthquake { Time = DateTime.Now, Magnitude = 7.2, Coordinates = new Point(12.34, 23.5), UpdatedTime = DateTime.MinValue };
-            //EarthquakeActivityDictionary.Add("ci37389175", quake);
-            //EarthquakeActivity.Add(quake);
-
             RefreshQuakeActivity = new RelayCommand(FetchEarthquakeActivity);
+            WindowLoaded = new RelayCommand(Initialize);  
+        }
+
+        private async Task FetchCityInfo()
+        {
+            string filePath = await FileHelper.FetchFile();
+            string extractedPath = await FileHelper.ExtractFile(filePath);   
+            Cities = await GetCities(extractedPath);
+        }
+
+        private async void Initialize(object parameter)
+        {
+            await FetchCityInfo();
+            FetchEarthquakeActivity(null);
             StartPeriodicTimer();
         }
 
@@ -54,15 +66,16 @@ namespace Quakitivity.ViewModel
                     var item = EarthquakeActivityDictionary[id.First()];
                     if (earthquake.UpdatedTime > item.UpdatedTime)
                     {
+                        quake.Cities = new ObservableCollection<City>(await CityHelper.FindNearbyCities(quake.Coordinates, Cities, Settings.Default.NearbyCityCount));
                         EarthquakeActivity.Remove(item);
                         EarthquakeActivityDictionary[id.First()] = quake;
                         EarthquakeActivity.Add(quake);
-
                     }
                 }
                 else
                 {
                     //This is the first time we are seeing this quake, so add it
+                    quake.Cities = new ObservableCollection<City>(await CityHelper.FindNearbyCities(quake.Coordinates, Cities, Settings.Default.NearbyCityCount));
                     EarthquakeActivityDictionary.Add(earthquake.ID, quake);
                     EarthquakeActivity.Add(quake);
                 }

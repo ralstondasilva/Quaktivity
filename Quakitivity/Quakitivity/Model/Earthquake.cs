@@ -55,7 +55,19 @@ namespace Quakitivity.Model
         /// <summary>
         /// The list of cities closest to the epicentre of the earthquake
         /// </summary>
-        public ObservableCollection<City> Cities { get; set; } = new ObservableCollection<City>(); 
+        public ObservableCollection<City> Cities { private get; set; } = new ObservableCollection<City>();
+        public string NearbyCities
+        {
+            get
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                if(Cities.Count >0)
+                    stringBuilder.Append(Cities[0].Name + " " + Cities[0].Country);
+                for (int i=1; i<Cities.Count; i++)
+                    stringBuilder.Append(", " + Cities[i].Name + " " + Cities[i].Country);
+                return stringBuilder.ToString();
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         void RaisePropertyChanged(string prop) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));

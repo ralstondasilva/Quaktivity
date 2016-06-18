@@ -5,11 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Quakitivity"
         xmlns:viewModel="clr-namespace:Quakitivity.ViewModel"
+        xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-        <Window.DataContext>
-            <viewModel:QuakeActivityViewModel/>
-        </Window.DataContext>
+    <Window.DataContext>
+        <viewModel:QuakeActivityViewModel/>
+    </Window.DataContext>
+    <Interactivity:Interaction.Triggers>
+        <Interactivity:EventTrigger EventName="Loaded">
+            <Interactivity:InvokeCommandAction Command="{Binding WindowLoaded}"/>
+        </Interactivity:EventTrigger>
+    </Interactivity:Interaction.Triggers>
     <Grid>
 
         <Grid.RowDefinitions>
@@ -53,7 +59,7 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="{Binding Time, StringFormat={}{0:MMMM dd yyyy hh:mm:ss tt}}" 
                                    HorizontalAlignment="Left" TextAlignment="Left"/>
-                        <TextBlock Grid.Column="1" Text="{Binding Magnitude, StringFormat={}{0:#.##}}" 
+                        <TextBlock Grid.Column="1" Text="{Binding Magnitude, StringFormat={}{0:0.##}}" 
                                    HorizontalAlignment="Center"/>
                         <TextBlock Grid.Column="2" TextWrapping="Wrap" >
                             <TextBlock.Text>
@@ -63,7 +69,7 @@
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
-                        <TextBlock Grid.Column="3" Text="City 1, City2, City3" TextWrapping="Wrap" 
+                        <TextBlock Grid.Column="3" Text="{Binding NearbyCities}" TextWrapping="Wrap" 
                                    VerticalAlignment="Center" HorizontalAlignment="Left"/>
                     </Grid>
                 </DataTemplate>

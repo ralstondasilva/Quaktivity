@@ -40,5 +40,14 @@ namespace Quakitivity.Properties {
                 return ((string)(this["SummaryURL"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int NearbyCityCount {
+            get {
+                return ((int)(this["NearbyCityCount"]));
+            }
+        }
     }
 }
