@@ -49,5 +49,14 @@ namespace Quakitivity.Properties {
                 return ((int)(this["NearbyCityCount"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://www.opengeocode.org/download/worldcities.zip")]
+        public string CitiesURL {
+            get {
+                return ((string)(this["CitiesURL"]));
+            }
+        }
     }
 }
