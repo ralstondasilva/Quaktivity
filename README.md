@@ -27,7 +27,8 @@ Alternately, build the solution and launch Quakitivity.exe from the bin\Debug or
 
 ## Dependencies/References
 
-All the dependencies are part of the .NET framework:
+All the dependencies are part of the .NET framework
+
 | Reference                         | Description										  |
 | --------------------------------- | --------------------------------------------------- |
 | System.Net.Http                   | To make a REST call to the earthquake.usgs.gov api  |
