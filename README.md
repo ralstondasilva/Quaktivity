@@ -13,6 +13,13 @@ The app displays the list of earthquakes occured. This feed is refreshed every 5
 You can manually refresh the list of earthquakes by clicking the refresh button. 
 At every refresh, new earthquake activity is added, and if the existing earthquakes have updated activity, the feed is updated.
 
+## Settings
+
+The app has some configurable settings. These are located in Properties\Settings:
+- The number of nearby cities to display
+- The periodic refresh timer
+- The urls for the earthquake feed and the list of cities
+
 ## Implementation Details
 
 ### List of Cities
