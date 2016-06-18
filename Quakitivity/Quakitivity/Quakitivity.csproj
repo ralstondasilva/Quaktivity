@@ -73,6 +73,7 @@
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Model\City.cs" />
     <Compile Include="Model\Earthquake.cs" />
+    <Compile Include="Model\UiState.cs" />
     <Compile Include="NetworkCommunication\EarthquakeUsgsGovRestAPI.cs" />
     <Compile Include="NetworkCommunication\GeoJsonSummary.cs" />
     <Compile Include="ViewModel\QuakeActivityViewModel.cs" />
@@ -96,7 +97,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">

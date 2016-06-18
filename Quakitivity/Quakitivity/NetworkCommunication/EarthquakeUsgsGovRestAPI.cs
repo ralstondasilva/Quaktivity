@@ -36,8 +36,9 @@ namespace Quakitivity.NetworkCommunication
                     return geoJsonSummary;
                 }
             }
-            catch (Exception e)
+            catch
             {
+                //TODO: Log error
                 return null;
             }
         }

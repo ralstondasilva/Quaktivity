@@ -18,9 +18,12 @@ namespace Quakitivity.ViewModel
     class QuakeActivityViewModel
     {
         private City[] Cities;
+        private bool FirstLoad = true;
 
         public RelayCommand RefreshQuakeActivity { get; set; }
         public RelayCommand WindowLoaded { get; set; }
+
+        public UiState UiState { get; } = new UiState();
 
         /// <summary>
         /// We use a combination of an ObservableCollection and a Dictionary to store the earthquakes.
@@ -39,15 +42,26 @@ namespace Quakitivity.ViewModel
         private async Task FetchCityInfo()
         {
             string filePath = await FileHelper.FetchFile();
-            string extractedPath = await FileHelper.ExtractFile(filePath);   
+            string extractedPath = FileHelper.ExtractFile(filePath);   
             Cities = await GetCities(extractedPath);
         }
 
         private async void Initialize(object parameter)
         {
-            await FetchCityInfo();
-            FetchEarthquakeActivity(null);
-            StartPeriodicTimer();
+            if (this.FirstLoad)
+            {
+                this.FirstLoad = false;
+
+                UiState.CityDownloader = Visibility.Visible;
+                UiState.EarthquakeReport = Visibility.Collapsed;
+                await FetchCityInfo();
+                UiState.CityDownloader = Visibility.Collapsed;
+                UiState.EarthquakeReport = Visibility.Visible;
+
+                FetchEarthquakeActivity(null);
+                
+                StartPeriodicTimer();
+            }
         }
 
         private async void FetchEarthquakeActivity(object parameter)
