@@ -46,12 +46,13 @@ The app reads the csv file line by line, and adds the city to a Dictionary if it
 The coordinates are used to uniquely identify the cities (The depth parameter is ignored, since distances on the surface would give us the same result).  
 For multiple entries for the same city, we store the first one we encountered - This can be changed to store the english names if needed)
 (Didn't use the NGA GNS Unique Feature Identifier (UFI) from the csv because some cities had this field empty).
+This operation completes in **O(n) time** and uses **O(n) space** (Where n is the total number of world cities).
 
 ### Nearby Cities
 
 The app lists the 3 nearest cities to the earthquake epicenter. 
 This is done by iterating through the City[] array and replacing the largest item in a SortedDictionary if a nearer city is found.
-This Operation completes in **O(log3 * n)** or  **O(n)** (where n is the total number of cities). 
+This Operation completes in **O(log3 * n)** or  **O(n) time** (where n is the number of unique world cities). And  **O(3) or constant space**
 This can be optimized further, but for now it seemed to be quick enough.
 
 The distance between two cities was calculated using the [GeoCoordinate.GetDistanceTo](https://msdn.microsoft.com/en-us/library/system.device.location.geocoordinate.getdistanceto(v=vs.110).aspx) method.
